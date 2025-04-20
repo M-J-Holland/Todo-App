@@ -1,9 +1,36 @@
 import FreeSimpleGUI as sG
-font_size = 44
-label = sG.Text("Enter a Todo:", text_color="white", background_color="black", font=font_size)
-input_box = sG.Input(tooltip="Enter todo", text_color="black", font=font_size)
-add_button = sG.Button("Add", font=font_size)
+from read_write_functions import read_todos, write_todos
 
-window = sG.Window("Todo-App", layout=[[label], [input_box, add_button]], background_color="black")
-window.read()
+label = sG.Text("Enter a Todo:", background_color="Black")
+input_box = sG.Input(tooltip="Enter todo", key="todo")
+add_button = sG.Button("Add")
+
+window = sG.Window("Todo-App",
+                   layout=[[label], [input_box, add_button]],
+                   background_color="black", font=("Helvetica", 20))
+
+while True:
+    event, values = window.read()
+    match event:
+        case 'Add':
+            todos = read_todos()
+            new_todo = values['todo']
+            todos.append(new_todo)
+            write_todos(todos)
+
+        case 'Show':
+            pass
+
+        case 'Edit':
+            pass
+
+        case 'Complete':
+            pass
+
+        case "Quit":
+            pass
+
+
+        case sG.WIN_CLOSED:
+            break
 window.close()
